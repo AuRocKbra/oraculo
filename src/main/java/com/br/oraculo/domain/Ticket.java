@@ -36,4 +36,5 @@ public class Ticket implements Serializable{
     @ManyToOne
     private Categoria categoria;
 
+
 }

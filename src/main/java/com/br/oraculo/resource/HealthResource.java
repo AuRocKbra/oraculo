@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
-@RequestMapping("/teste")
-public class Testes {
+@RequestMapping("/api")
+public class HealthResource {
 
-    @GetMapping("/up")
+    @GetMapping("/health")
     public String getMethodName() {
         return new String("Aplicação em execução "+new Date());
     }
