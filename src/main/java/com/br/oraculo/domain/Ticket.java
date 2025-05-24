@@ -2,15 +2,13 @@ package com.br.oraculo.domain;
 
 import java.io.Serializable;
 
-import org.hibernate.annotations.ManyToAny;
-
-import jakarta.annotation.Generated;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,12 +27,26 @@ public class Ticket implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CD_TICKET")
     private Long idTicket;
 
+    @Column(name ="DS_DESCRICAO")
     private String descricao;
 
+    @Column(name = "DS_SENTIMENTO")
+    private String sentimento;
+
+    @Column(name = "DS_TITULO")
+    private String titulo;
+
     @ManyToOne
+    @JoinColumn(name = "CD_CATEGORIA")
     private Categoria categoria;
 
-
+    public Ticket (String descricao, String sentimento, String titulo, Categoria categoria){
+        this.descricao = descricao;
+        this.sentimento = sentimento;
+        this.titulo = titulo;
+        this.categoria = categoria;
+    }
 }

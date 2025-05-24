@@ -1,6 +1,7 @@
 package com.br.oraculo.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,7 @@ public class Erro implements Serializable{
     private String titulo;
     private String mensagemErro;
     private Integer statusCode;
-    private String[] erros;
+    private Throwable erros;
 
     public Erro(String titulo, String mensagemErro,Integer statusCode){
         this.titulo = titulo;
@@ -24,7 +25,7 @@ public class Erro implements Serializable{
         this.statusCode = statusCode;
     }
 
-    public Erro(String titulo, String mensagemErro,Integer statusCode,String[] erros){
+    public Erro(String titulo, String mensagemErro,Integer statusCode,Throwable erros){
         this.titulo = titulo;
         this.mensagemErro = mensagemErro;
         this.statusCode = statusCode;
