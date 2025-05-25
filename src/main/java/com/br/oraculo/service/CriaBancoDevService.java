@@ -24,5 +24,11 @@ public class CriaBancoDevService {
                                              null, "Computador não liga", null);
         Ticket ticketExemplo5 = new Ticket("Gostaria de saber se exeite alguma documentação sobre os serviços da api de documentos",
                                              null, "Documentação da api de documentos", null);
+
+        ticketService.criarTicket(ticketExemplo1);
+        ticketService.criarTicket(ticketExemplo2);
+        ticketService.criarTicket(ticketExemplo3);
+        ticketService.criarTicket(ticketExemplo4);
+        ticketService.criarTicket(ticketExemplo5);
     }
 }
