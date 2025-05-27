@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.br.oraculo.domain.Ticket;
 import com.br.oraculo.exception.ErroInternoException;
 import com.br.oraculo.exception.RecursoNaoEncontradoException;
+import com.br.oraculo.exception.RequisicaoErradaException;
 import com.br.oraculo.repository.TicketRepository;
 import com.br.oraculo.utils.TemplateMensagens;
 
@@ -34,5 +35,19 @@ public class TicketService {
         }catch(Exception e){
             throw new ErroInternoException(TemplateMensagens.ERRO_INTERNO,new Throwable("ERRO-CAD-TIC"));
         }    
+    }
+
+    public Ticket atualizarTicket(Ticket dadosNovosTicket,Long idTicket){
+        if(dadosNovosTicket.getIdTicket().equals(idTicket)){
+            Ticket dadosTicketBanco = recuperaTicketPorId(idTicket);
+            dadosTicketBanco.setCategoria(dadosNovosTicket.getCategoria());
+            dadosTicketBanco.setDescricao(dadosNovosTicket.getDescricao());
+            dadosTicketBanco.setSentimento(dadosNovosTicket.getSentimento());
+            dadosTicketBanco.setTitulo(dadosNovosTicket.getTitulo());
+            ticketRepository.save(dadosTicketBanco);
+            return dadosTicketBanco;
+        }
+        throw new RequisicaoErradaException(TemplateMensagens.REQUISICAO_ERRADA_NUMERO_TICKET);
+        
     }
 }

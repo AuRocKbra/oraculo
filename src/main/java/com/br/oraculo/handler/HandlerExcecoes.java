@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.br.oraculo.domain.Erro;
 import com.br.oraculo.exception.ErroInternoException;
 import com.br.oraculo.exception.RecursoNaoEncontradoException;
+import com.br.oraculo.exception.RequisicaoErradaException;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -25,6 +26,12 @@ public class HandlerExcecoes {
     @ExceptionHandler(ErroInternoException.class)
     public ResponseEntity<Erro> handlerRecursoNaoEncontrado(ErroInternoException exception){
         Erro detalheErro = new Erro("Erro no processamento",exception.getLocalizedMessage(),HttpServletResponse.SC_NOT_FOUND,exception.getCause());
+        return ResponseEntity.status(detalheErro.getStatusCode()).header(HEARDER,VALOR_CONTENTI_TYPE).body(detalheErro);
+    }
+
+    @ExceptionHandler(RequisicaoErradaException.class)
+    public ResponseEntity<Erro> handlerRequisicaoErrada(RequisicaoErradaException exception){
+        Erro detalheErro = new Erro("Requisição errada",exception.getLocalizedMessage(),HttpServletResponse.SC_BAD_REQUEST);
         return ResponseEntity.status(detalheErro.getStatusCode()).header(HEARDER,VALOR_CONTENTI_TYPE).body(detalheErro);
     }
 }
