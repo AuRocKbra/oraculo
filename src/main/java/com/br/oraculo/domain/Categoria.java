@@ -26,8 +26,16 @@ public class Categoria implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CD_CATEGORIA")
-    private Long idCategoria;
+    private Integer codigoCategoria;
 
     @Column(name = "NM_CATEGORIA")
     private String nomeCategoria;
+
+    @Column(name = "DS_IDENTIFICACAO_CATEGORIA")
+    private String codigoIdentificacaoCategoria;
+
+    public Categoria(String nomeCategoria,String codigoIdentificacaoCategoria){
+        this.nomeCategoria = nomeCategoria;
+        this.codigoIdentificacaoCategoria = codigoIdentificacaoCategoria.toUpperCase();
+    }
 }

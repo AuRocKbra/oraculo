@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.br.oraculo.domain.Ticket;
+import com.br.oraculo.domain.dto.TicketDTO;
 import com.br.oraculo.exception.ErroInternoException;
 import com.br.oraculo.exception.RecursoNaoEncontradoException;
-import com.br.oraculo.exception.RequisicaoErradaException;
 import com.br.oraculo.repository.TicketRepository;
 import com.br.oraculo.utils.TemplateMensagens;
 
@@ -28,7 +28,7 @@ public class TicketService {
         return ticketRepository.findById(id).orElseThrow(()->new RecursoNaoEncontradoException(TemplateMensagens.RECURSO_NAO_ENCONTRATO));
     }
 
-    public Long criarTicket(Ticket novoTicket){
+    public Integer criarTicket(Ticket novoTicket){
         try{
             Ticket ticketCriado = ticketRepository.save(novoTicket);
             return ticketCriado.getIdTicket();
@@ -37,17 +37,12 @@ public class TicketService {
         }    
     }
 
-    public Ticket atualizarTicket(Ticket dadosNovosTicket,Long idTicket){
-        if(dadosNovosTicket.getIdTicket().equals(idTicket)){
-            Ticket dadosTicketBanco = recuperaTicketPorId(idTicket);
-            dadosTicketBanco.setCategoria(dadosNovosTicket.getCategoria());
-            dadosTicketBanco.setDescricao(dadosNovosTicket.getDescricao());
-            dadosTicketBanco.setSentimento(dadosNovosTicket.getSentimento());
-            dadosTicketBanco.setTitulo(dadosNovosTicket.getTitulo());
-            ticketRepository.save(dadosTicketBanco);
-            return dadosTicketBanco;
-        }
-        throw new RequisicaoErradaException(TemplateMensagens.REQUISICAO_ERRADA_NUMERO_TICKET);
-        
+    public Ticket atualizarTicket(TicketDTO dadosNovosTicket,Long idTicket){
+        Ticket dadosTicketBanco = recuperaTicketPorId(idTicket);
+        dadosTicketBanco.setCategoria(dadosNovosTicket.categoria());
+        dadosTicketBanco.setDescricao(dadosNovosTicket.descricao());
+        dadosTicketBanco.setTitulo(dadosNovosTicket.titulo());
+        ticketRepository.save(dadosTicketBanco);
+        return dadosTicketBanco;
     }
 }

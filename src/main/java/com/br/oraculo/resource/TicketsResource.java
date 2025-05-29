@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.br.oraculo.domain.Ticket;
+import com.br.oraculo.domain.dto.TicketDTO;
 import com.br.oraculo.service.TicketService;
 import com.br.oraculo.utils.TemplateMensagens;
 
@@ -47,16 +48,16 @@ public class TicketsResource {
         return ResponseEntity.ok().body(ticketService.recuperaTicketPorId(idTicket));
     }
     
-    @PostMapping("/tickets")
-    public ResponseEntity<URI> postMethodName(@RequestBody Ticket notoTicket) {
+    @PostMapping(value = "/tickets",produces = "application/x-www-form-urlencoded;charset=UTF-8")
+    public ResponseEntity<URI> postMethodName(@RequestBody TicketDTO novoTicket) {
         log.info(TemplateMensagens.REQUISICAO_RECEBIDA,"para criação de ticket");
-        Long idNovoTicket = ticketService.criarTicket(notoTicket);
+        Integer idNovoTicket = ticketService.criarTicket(new Ticket(novoTicket.descricao(), novoTicket.titulo(), novoTicket.categoria()));
         URI uriNovoTicket = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(idNovoTicket).toUri();
         return ResponseEntity.created(uriNovoTicket).build();
     }
 
-    @PutMapping("/tickets/{id}")
-    public ResponseEntity<Ticket> putMethodName(@PathVariable Long idTicket, @RequestBody Ticket dadosAtualizadosTicket) {
+    @PutMapping(value = "/tickets/{idTicket}",produces="application/json;charset=UTF-8")
+    public ResponseEntity<Ticket> putMethodName(@PathVariable Long idTicket, @RequestBody TicketDTO dadosAtualizadosTicket) {
         log.info(TemplateMensagens.REQUISICAO_RECEBIDA,"para atualização do ticket "+idTicket);
         return ResponseEntity.ok().body(ticketService.atualizarTicket(dadosAtualizadosTicket, idTicket));
     }

@@ -28,13 +28,10 @@ public class Ticket implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CD_TICKET")
-    private Long idTicket;
+    private Integer idTicket;
 
     @Column(name ="DS_DESCRICAO")
     private String descricao;
-
-    @Column(name = "DS_SENTIMENTO")
-    private String sentimento;
 
     @Column(name = "DS_TITULO")
     private String titulo;
@@ -43,9 +40,8 @@ public class Ticket implements Serializable{
     @JoinColumn(name = "CD_CATEGORIA")
     private Categoria categoria;
 
-    public Ticket (String descricao, String sentimento, String titulo, Categoria categoria){
+    public Ticket (String descricao, String titulo, Categoria categoria){
         this.descricao = descricao;
-        this.sentimento = sentimento;
         this.titulo = titulo;
         this.categoria = categoria;
     }

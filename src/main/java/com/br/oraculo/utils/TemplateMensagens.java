@@ -14,5 +14,5 @@ public class TemplateMensagens {
     /*
      * Mensagem de informação de log
      */
-    public static final String REQUISICAO_RECEBIDA = "Requisição recebida {1}";
+    public static final String REQUISICAO_RECEBIDA = "Requisição recebida {}";
 }
