@@ -15,4 +15,6 @@ public class TemplateMensagens {
      * Mensagem de informação de log
      */
     public static final String REQUISICAO_RECEBIDA = "Requisição recebida {}";
+    public static final String INICIANDO_ROTINAS = "Iniciando {}";
+    public static final String ERRO_ROTINA = "Erro ao realizar {}. Erro ->{}";
 }

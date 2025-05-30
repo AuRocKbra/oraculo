@@ -1,5 +1,7 @@
 package com.br.oraculo.resource;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -45,19 +47,19 @@ public class TicketsResource {
     @GetMapping(value = "/tickets/{id}",produces = "application/json;charset=UTF-8")
     public ResponseEntity<Ticket> listarTikets(@PathVariable(name = "id")Long idTicket) {
         log.info(TemplateMensagens.REQUISICAO_RECEBIDA,"para recuperar dados de ticket "+idTicket);
-        return ResponseEntity.ok().body(ticketService.recuperaTicketPorId(idTicket));
+        return ResponseEntity.ok().body(ticketService.recuperarTicketPorId(idTicket));
     }
     
-    @PostMapping(value = "/tickets",produces = "application/x-www-form-urlencoded;charset=UTF-8")
-    public ResponseEntity<URI> postMethodName(@RequestBody TicketDTO novoTicket) {
+    @PostMapping(value = "/tickets",produces = "application/json;charset=UTF-8")
+    public ResponseEntity<URI> postMethodName(@Validated @RequestBody TicketDTO novoTicket) {
         log.info(TemplateMensagens.REQUISICAO_RECEBIDA,"para criação de ticket");
-        Integer idNovoTicket = ticketService.criarTicket(new Ticket(novoTicket.descricao(), novoTicket.titulo(), novoTicket.categoria()));
+        Integer idNovoTicket = ticketService.criarTicket(novoTicket);
         URI uriNovoTicket = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(idNovoTicket).toUri();
-        return ResponseEntity.created(uriNovoTicket).build();
+        return ResponseEntity.created(uriNovoTicket).body(uriNovoTicket);
     }
 
     @PutMapping(value = "/tickets/{idTicket}",produces="application/json;charset=UTF-8")
-    public ResponseEntity<Ticket> putMethodName(@PathVariable Long idTicket, @RequestBody TicketDTO dadosAtualizadosTicket) {
+    public ResponseEntity<Ticket> putMethodName(@PathVariable Long idTicket, @Validated @RequestBody TicketDTO dadosAtualizadosTicket) {
         log.info(TemplateMensagens.REQUISICAO_RECEBIDA,"para atualização do ticket "+idTicket);
         return ResponseEntity.ok().body(ticketService.atualizarTicket(dadosAtualizadosTicket, idTicket));
     }
