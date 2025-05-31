@@ -1,8 +1,11 @@
 package com.br.oraculo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.br.oraculo.domain.Categoria;
+import com.br.oraculo.domain.dto.TicketInsertDTO;
+import com.br.oraculo.domain.dto.TicketListagemDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +28,21 @@ public class TicketService {
         this.categoriaService = categoriaService;
     }
 
+    public List<TicketListagemDTO> recurperarTodosTicketsDTO(){
+        log.info(TemplateMensagens.INICIANDO_ROTINAS,"serviço de consulta de tickets DTO");
+        List<Ticket> tickets = recurperarTodosTickets();
+        List<TicketListagemDTO> listagemDTOS = new ArrayList<>();
+        tickets.forEach(ticket -> listagemDTOS.add(new TicketListagemDTO(ticket)));
+        return listagemDTOS;
+    }
+
     public List<Ticket> recurperarTodosTickets(){
+        log.info(TemplateMensagens.INICIANDO_ROTINAS,"serviço de consulta de tickets");
         return ticketRepository.findAll();
     }
 
-    public Ticket recuperarTicketPorId(Long id){
+    public Ticket recuperarTicketPorId(Integer id){
+        log.info(TemplateMensagens.INICIANDO_ROTINAS,"serviço de consulta de ticket por id");
         return ticketRepository.findById(id).orElseThrow(()->new RecursoNaoEncontradoException(TemplateMensagens.RECURSO_NAO_ENCONTRATO));
     }
 
@@ -45,7 +58,7 @@ public class TicketService {
         }    
     }
 
-    public Ticket atualizarTicket(TicketDTO dadosNovosTicket,Long idTicket){
+    public Ticket atualizarTicket(TicketInsertDTO dadosNovosTicket, Integer idTicket){
         log.info(TemplateMensagens.INICIANDO_ROTINAS,"serviço de atualização de ticket");
         Ticket dadosTicketBanco = recuperarTicketPorId(idTicket);
         Categoria categoria = categoriaService.recuperarCategoriaPorId(dadosNovosTicket.categoria());
@@ -53,6 +66,7 @@ public class TicketService {
             dadosTicketBanco.setCategoria(categoria);
             dadosTicketBanco.setDescricao(dadosNovosTicket.descricao());
             dadosTicketBanco.setTitulo(dadosNovosTicket.titulo());
+            dadosTicketBanco.setStatus(dadosNovosTicket.status());
             ticketRepository.save(dadosTicketBanco);
             return dadosTicketBanco;
         }catch (Exception e){

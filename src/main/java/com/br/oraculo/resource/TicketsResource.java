@@ -1,5 +1,7 @@
 package com.br.oraculo.resource;
 
+import com.br.oraculo.domain.dto.TicketInsertDTO;
+import com.br.oraculo.domain.dto.TicketListagemDTO;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,13 +41,13 @@ public class TicketsResource {
     }
 
     @GetMapping(value = "/tickets",produces = "application/json;charset=UTF-8")
-    public ResponseEntity<List<Ticket>> listarTikets() {
+    public ResponseEntity<List<TicketListagemDTO>> listarTikets() {
         log.info(TemplateMensagens.REQUISICAO_RECEBIDA,"para listagem de tickets");
-        return ResponseEntity.ok().body(ticketService.recurperarTodosTickets());
+        return ResponseEntity.ok().body(ticketService.recurperarTodosTicketsDTO());
     }
 
     @GetMapping(value = "/tickets/{id}",produces = "application/json;charset=UTF-8")
-    public ResponseEntity<Ticket> listarTikets(@PathVariable(name = "id")Long idTicket) {
+    public ResponseEntity<Ticket> listarTikets(@PathVariable(name = "id")Integer idTicket) {
         log.info(TemplateMensagens.REQUISICAO_RECEBIDA,"para recuperar dados de ticket "+idTicket);
         return ResponseEntity.ok().body(ticketService.recuperarTicketPorId(idTicket));
     }
@@ -59,7 +61,7 @@ public class TicketsResource {
     }
 
     @PutMapping(value = "/tickets/{idTicket}",produces="application/json;charset=UTF-8")
-    public ResponseEntity<Ticket> putMethodName(@PathVariable Long idTicket, @Validated @RequestBody TicketDTO dadosAtualizadosTicket) {
+    public ResponseEntity<Ticket> putMethodName(@PathVariable Integer idTicket, @Validated @RequestBody TicketInsertDTO dadosAtualizadosTicket) {
         log.info(TemplateMensagens.REQUISICAO_RECEBIDA,"para atualização do ticket "+idTicket);
         return ResponseEntity.ok().body(ticketService.atualizarTicket(dadosAtualizadosTicket, idTicket));
     }

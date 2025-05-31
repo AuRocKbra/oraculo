@@ -1,15 +1,12 @@
 package com.br.oraculo.domain;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.br.oraculo.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +19,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "TB_TICKET")
 public class Ticket implements Serializable{
-
+    @Serial
     private static final long serialVersionUID = 1l;
 
     @Id
@@ -40,9 +37,13 @@ public class Ticket implements Serializable{
     @JoinColumn(name = "CD_CATEGORIA")
     private Categoria categoria;
 
+    @Column(name = "CD_STATUS")
+    private Integer status;
+
     public Ticket (String descricao, String titulo, Categoria categoria){
         this.descricao = descricao;
         this.titulo = titulo;
         this.categoria = categoria;
+        this.status = Status.AGUARDANDO_ATENDIMENTO.getCodigoStatus();
     }
 }

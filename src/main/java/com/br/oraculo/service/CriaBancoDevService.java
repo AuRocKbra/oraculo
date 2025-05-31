@@ -1,5 +1,6 @@
 package com.br.oraculo.service;
 
+import com.br.oraculo.domain.Usuario;
 import com.br.oraculo.domain.dto.TicketDTO;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,12 @@ public class CriaBancoDevService {
         categoriaService.criarCategoria(categoria3);
         categoriaService.criarCategoria(categoria4);
         categoriaService.criarCategoria(categoria5);
+
+        Usuario usuario1 = new Usuario("Usuario teste 1","teste1","Abcd@123456");
+        Usuario usuario2 = new Usuario("Usuario teste 2","teste2","Dr12345");
+        Usuario usuario3 = new Usuario("Usuario teste 3","teste3","Or@cul0");
+
+
 
         Ticket ticketExemplo1 = new Ticket("Hoje pela manhã não consegui logar na aplicação XPTO. Sempre que digitava o usuário e senha a mensagem de usuário e senha inválidos esta apresentada, porém ambos os dados estão corretos",
                                              "Erro na autenticação", categoriaService.recuperarCategoriaPorId(3));
