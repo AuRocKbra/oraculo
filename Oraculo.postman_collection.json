@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "08953a9c-cb6c-4d92-bac4-22a4ff1f2741",
+		"name": "Oraculo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12073119"
+	},
+	"item": [
+		{
+			"name": "Vida aplicação",
+			"item": [
+				{
+					"name": "LOCAL - Keep alive",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api-oraculo/api/health",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api-oraculo",
+								"api",
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "LOCAL - Recupera tickets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api-oraculo/api/tickets",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api-oraculo",
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOCAL - Recupera ticket por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api-oraculo/api/tickets/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api-oraculo",
+								"api",
+								"tickets",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOCAL - Criar ticket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"titulo\":\"Configuração de pipeline de produção\",\n   \"descricao\":\"Solicito a criação de pipeline de produção do sistema KBTO\",\n   \"categoria\":5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api-oraculo/api/tickets",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api-oraculo",
+								"api",
+								"tickets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOCAL - Atualiza ticket",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"titulo\":\"Configuração de pipeline de produção\",\r\n   \"descricao\":\"Solicito a criação de pipeline de produção do sistema KBTO\",\r\n   \"categoria\":5,\r\n   \"status\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api-oraculo/api/tickets/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api-oraculo",
+								"api",
+								"tickets",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
